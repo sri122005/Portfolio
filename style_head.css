@@ -1,0 +1,301 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap');
+
+/* RESET & BASE */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Roboto', sans-serif; /* Global Roboto */
+    scroll-behavior: smooth;
+}
+
+:root {
+    --bg-main: #050505; /* Pure, deep black */
+    --bg-card: rgba(255, 255, 255, 0.03); /* Subtle Glass */
+    --border-card: rgba(255, 255, 255, 0.08);
+    --text-main: #ffffff;
+    --text-muted: #a0a0a0;
+    --accent: #d4d4d4; /* Silver/Platinum */
+    --gradient-gold: linear-gradient(135deg, #e5e5e5, #999999);
+    --theme-accent: #a78bfa; /* Soft Lavender - Aesthetic Unified Color */
+    --gradient-purple: linear-gradient(135deg, #8E44AD, #32174D); /* Russian Violet Theme */
+    --glow-purple: rgba(50, 23, 77, 0.5);
+}
+
+body {
+    background-color: var(--bg-main);
+    color: var(--text-main);
+    line-height: 1.7;
+    position: relative;
+    overflow-x: hidden;
+}
+
+/* SUBTLE RADIAL GLOW (Background) */
+body::before {
+    content: '';
+    position: fixed;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle at center, rgba(88, 28, 135, 0.15) 0%, transparent 60%); /* Deeper Purple Orb */
+    z-index: -1;
+    pointer-events: none;
+}
+
+/* NAVBAR */
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 30px; /* Reduced height */
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80%; /* Smaller, more compact */
+    min-width: 300px;
+    max-width: 850px;
+    z-index: 1000;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    
+    /* Transparent Initially */
+    background: transparent;
+    backdrop-filter: none;
+    border: 1px solid transparent;
+    box-shadow: none;
+    border-radius: 50px;
+}
+
+nav.scrolled {
+    /* Visible Only on Scroll */
+    background: transparent; /* No color, just glass */
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(147, 51, 234, 0.1);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    padding: 8px 30px; /* Even smaller on scroll */
+    top: 15px;
+}
+
+
+
+
+.logo {
+    font-family: 'Roboto', sans-serif;
+    font-size: 18px; /* Smaller */
+    font-weight: 600; 
+    color: var(--text-main);
+    letter-spacing: 2px; /* W i d e r  &  P r e t t i e r */
+    text-transform: uppercase;
+}
+
+/* ... */
+
+nav ul {
+    display: flex;
+    list-style: none;
+    gap: 40px;
+}
+
+nav a {
+    text-decoration: none;
+    color: var(--text-muted);
+    font-size: 13px; /* Smaller, more aesthetic */
+    font-weight: 500;
+    letter-spacing: 1.5px; /* Increased letter spacing */
+    transition: 0.3s;
+    text-transform: uppercase;
+}
+
+nav a:hover {
+    color: var(--text-main);
+    letter-spacing: 2px; /* Subtle expansion effect */
+}
+
+/* CONTAINER */
+.container {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 140px 20px 80px;
+}
+
+/* TYPOGRAPHY UTILS */
+
+h1, h2, h3 {
+    font-family: 'Roboto', sans-serif;
+    font-weight: 500; /* Reduced from 700 */
+    color: var(--text-main);
+}
+
+
+.section-title {
+    font-size: clamp(28px, 4vw, 38px);
+    margin-bottom: 70px;
+    margin-top: 20px;
+    text-align: center;
+    position: relative;
+    letter-spacing: -0.5px;
+}
+
+.section-title::after {
+    content: '';
+    display: block;
+    width: 60px;
+    height: 2px;
+    background: var(--text-muted);
+    margin: 15px auto 0;
+    opacity: 0.3;
+}
+
+/* HERO */
+.hero {
+    /* min-height: 80vh; */
+    display: flex;
+    flex-direction: row; 
+    align-items: center;
+    justify-content: center;
+    text-align: left;
+    padding: 80px 40px; 
+    gap: 60px;
+    position: relative;
+    margin: 40px 0;
+}
+
+/* Corner Border Effect (Transparent) */
+.hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    padding: 3px; /* Border thickness */
+    border-radius: 30px; 
+    pointer-events: none;
+    
+    /* Gradient Border Logic */
+    background: linear-gradient(135deg, #a855f7, #6366f1);
+    -webkit-mask: 
+        linear-gradient(#fff 0 0) content-box, 
+        linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    
+    /* Corner Masking Logic (Shows only corners) */
+    /* Note: We need a wrapping strategy or clip-path for true distinct corners with gradient borders. 
+       Reverting to simple border for gradient + mask compatibility, but adding GLOW. */
+       
+    border: 3px solid #512888; /* Dark Russian Violet */
+    background: none;
+    -webkit-mask: none;
+    mask: none;
+    
+    /* True Corner Mask */
+    -webkit-mask-image: 
+        linear-gradient(#fff, #fff), 
+        linear-gradient(#fff, #fff), 
+        linear-gradient(#fff, #fff), 
+        linear-gradient(#fff, #fff);
+    mask-image: 
+        linear-gradient(#fff, #fff), 
+        linear-gradient(#fff, #fff), 
+        linear-gradient(#fff, #fff), 
+        linear-gradient(#fff, #fff);
+        
+    -webkit-mask-position: top left, top right, bottom left, bottom right;
+    mask-position: top left, top right, bottom left, bottom right;
+    
+    -webkit-mask-size: 60px 60px; /* Slightly longer corners */
+    mask-size: 60px 60px;
+    
+    -webkit-mask-repeat: no-repeat;
+    mask-repeat: no-repeat;
+    
+    /* Styling */
+    filter: drop-shadow(0 0 10px rgba(81, 40, 136, 0.6)); /* DARK PURPLE GLOW */
+    z-index: 10;
+}
+
+/* Clean up old blockers */
+.hero::after {
+    display: none;
+}
+
+.hero > * {
+    position: relative;
+    z-index: 10;
+}
+
+.hero-image-wrapper {
+    width: 350px;
+    height: 350px;
+    margin-bottom: 0;
+    flex-shrink: 0;
+    position: relative;
+}
+
+.hero-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 2px solid rgba(255,255,255,0.1);
+    box-shadow: 0 0 30px rgba(255,255,255,0.1);
+    transition: transform 0.5s ease;
+}
+
+.hero-img:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 50px rgba(255,255,255,0.2);
+}
+
+.hero-content {
+    max-width: 400px;
+    height: 350px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.hero h1 {
+    font-size: clamp(2rem, 5vw, 2.5rem); /* Fluid scaling */
+    font-weight: 500;
+    line-height: 1.2;
+    margin-bottom: 15px;
+    color: #ffffff;
+}
+
+.name-highlight {
+    color: #512888; /* Solid Russian Violet */
+    background: none;
+    -webkit-text-fill-color: initial;
+    font-weight: 700;
+    text-shadow: none; /* No glow */
+    transition: 0.3s ease;
+}
+
+.hero p {
+    font-size: 15px; /* Reduced from 18px */
+    color: var(--text-muted);
+    margin-bottom: 25px;
+    font-weight: 400;
+    line-height: 1.6;
+}
+
+.hero-quote {
+    position: relative;
+    margin: 30px 0 40px; /* Align left margins */
+    max-width: 100%;
+    text-align: left;
+    padding: 20px;
+    background: var(--bg-card);
+    border-radius: 12px;
+    border: 1px solid var(--border-card);
+    border-left: 3px solid var(--text-main); /* Premium accent */
+}
+
+.hero-quote p {
+    font-family: 'Roboto', sans-serif; /* Restored Aesthetic Sans */
+    font-size: 16px;
+    font-style: italic;
+    color: #e0e0e0;
+    margin-bottom: 10px;
+}
+

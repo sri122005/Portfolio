@@ -30,22 +30,34 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Navbar Scroll Effect
     const nav = document.querySelector('nav');
+    // Navbar Scroll & Scroll Spy
+    const sections = document.querySelectorAll('section');
+    
     window.addEventListener('scroll', () => {
+        // 1. Navbar Glass Effect
         if (window.scrollY > 50) {
             nav.classList.add('scrolled');
         } else {
             nav.classList.remove('scrolled');
         }
+        
+        // 2. Scroll Spy: Highlight Links based on Section
+        let current = 'home'; // Default to home
+        
+        sections.forEach(section => {
+            const sectionTop = section.offsetTop;
+            // Trigger when section is near top of viewport (-150px offset)
+            if (window.scrollY >= (sectionTop - 200)) {
+                current = section.getAttribute('id');
+            }
+        });
 
-        // Close Mobile Menu on Scroll
-        if (navLinks.classList.contains('active')) {
-            navLinks.classList.remove('active');
-            
-            // Reset Icon
-            const icon = menuToggle.querySelector('i');
-            icon.classList.remove('fa-times');
-            icon.classList.add('fa-bars');
-        }
+        links.forEach(link => {
+            link.classList.remove('active');
+            if (current && link.getAttribute('href').includes(current)) {
+                link.classList.add('active');
+            }
+        });
     });
     // Contact Form Handling
     const form = document.getElementById('contact-form');
@@ -107,4 +119,32 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     }
+
+    // ===========================
+    // SCROLL REVEAL ANIMATIONS
+    // ===========================
+    // Select elements to animate
+    const revealTargets = document.querySelectorAll('section > *, .bento-item, .project-card');
+
+    // Add initial hidden state class
+    revealTargets.forEach(el => {
+        el.classList.add('reveal-element');
+    });
+
+    const revealObserver = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('active');
+                observer.unobserve(entry.target); // Animate only once
+            }
+        });
+    }, {
+        root: null,
+        threshold: 0.15, 
+        rootMargin: "0px 0px -50px 0px" // Trigger slightly before bottom
+    });
+
+    revealTargets.forEach(el => {
+        revealObserver.observe(el);
+    });
 });

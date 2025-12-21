@@ -1,0 +1,301 @@
+.project-card p {
+    font-size: 15px;
+    color: var(--text-muted);
+    margin-bottom: 25px;
+}
+
+.project-tags {
+    display: flex;
+    gap: 10px;
+}
+
+.tag {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    border: 1px solid var(--theme-accent); /* Unified Accent Border */
+    padding: 6px 12px;
+    border-radius: 50px;
+    color: var(--theme-accent); /* Unified Accent Text */
+    background: rgba(167, 139, 250, 0.05); /* Very subtle tint */
+}
+
+/* CONTACT FORM & SECTION */
+.contact-section {
+    max-width: 600px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.contact-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    margin-top: 40px;
+}
+
+.form-input {
+    width: 100%;
+    padding: 16px 20px;
+    background: transparent;
+    border: 1px solid var(--border-card);
+    color: var(--text-main);
+    font-size: 15px;
+    transition: 0.3s;
+    font-family: 'Manrope', sans-serif;
+}
+
+.form-input:focus {
+    outline: none;
+    border-color: var(--text-muted);
+    background: rgba(255, 255, 255, 0.02);
+}
+
+textarea.form-input {
+    min-height: 150px;
+    resize: vertical;
+}
+
+.submit-btn {
+    padding: 18px 40px;
+    background: var(--gradient-purple); /* Purple Gradient Button */
+    color: #fff;
+    border: none;
+    font-size: 14px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    cursor: pointer;
+    transition: 0.3s;
+    align-self: center; /* Center */
+}
+
+.submit-btn:hover {
+    background: #e0e0e0;
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.15);
+}
+
+/* SOCIAL LINKS */
+.social-links {
+    margin-top: 50px;
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+}
+
+.social-link {
+    color: var(--text-muted);
+    font-size: 22px;
+    transition: 0.3s;
+}
+
+.social-link:hover {
+    color: var(--theme-accent);
+}
+
+/* RESPONSIVE */
+/* RESPONSIVE */
+@media (max-width: 768px) {
+    .container {
+        padding: 100px 20px;
+    }
+
+    /* Hero Stacks Vertically */
+    .hero {
+        flex-direction: column;
+        text-align: center;
+        padding: 40px 0;
+        gap: 30px;
+    }
+
+    .hero-image-wrapper {
+        width: 200px; /* Smaller image */
+        height: 200px;
+        margin-bottom: 20px;
+    }
+
+    .hero-content {
+        max-width: 100%;
+        height: auto; /* Reset fixed height from desktop */
+        align-items: center; /* Center button and text */
+    }
+
+    .hero h1 {
+        font-size: 32px; /* Adjusted size */
+    }
+
+    .hero-quote {
+        margin: 20px auto; /* Center align quote */
+        text-align: center;
+        width: 100%; /* Ensure full width availability */
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        border-left: 1px solid var(--border-card); /* Reset left border */
+        border-top: 3px solid var(--text-main); /* Move accent to top */
+    }
+
+    /* Bento Grid columns */
+    .bento-grid {
+        grid-template-columns: 1fr; /* Stack items */
+    }
+
+    .bento-item.large,
+    .bento-item.medium {
+        grid-column: span 1;
+        grid-row: auto;
+    }
+
+    /* Projects Grid */
+    .projects-grid {
+        grid-template-columns: 1fr;
+    }
+
+    nav {
+        width: 95%; /* Use more screen width on mobile */
+        padding: 15px 25px; /* Slightly compact padding */
+        justify-content: space-between; /* Space out Logo and Icon */
+    }
+
+    /* Scroll State: Hide Navbar Completely */
+    nav.scrolled {
+        top: -150px; /* Slide up out of view */
+        opacity: 0;
+        pointer-events: none; /* Prevent clicks when hidden */
+    }
+
+    .logo {
+        font-size: 20px;
+    }
+
+    /* Hide links initially on mobile */
+    .nav-links {
+        position: fixed;
+        top: 0;
+        right: -100%; /* Slide out */
+        width: 70%;
+        height: 100vh;
+        background: rgba(5, 5, 5, 0.95);
+        backdrop-filter: blur(20px);
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 40px;
+        transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        z-index: 999;
+        box-shadow: -10px 0 30px rgba(0,0,0,0.5);
+    }
+
+    .nav-links.active {
+        right: 0; /* Slide in */
+    }
+
+    .nav-links li a {
+        font-size: 18px; /* Smaller/cleaner */
+        font-weight: 700;
+        color: var(--text-main);
+    }
+
+    .menu-toggle {
+        display: block; /* Visible on mobile */
+        font-size: 20px; /* Smaller icon */
+        cursor: pointer;
+        z-index: 1000;
+        color: var(--text-main);
+    }
+}
+
+/* Desktop Styles for Toggle */
+@media (min-width: 769px) {
+    .menu-toggle {
+        display: none;
+    }
+}
+
+/* =========================
+   FINAL MOBILE FIX (<=400px)
+   Clean, centered, stable
+========================= */
+@media (max-width: 400px) {
+
+  body {
+    overflow-x: hidden;
+  }
+
+  /* Container */
+  .container {
+    max-width: 100%;
+    margin: 0 auto;
+    padding: 90px 16px 60px;
+  }
+
+  /* HERO */
+  .hero {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    text-align: center;
+    gap: 20px;
+
+    margin: 0 auto;
+    padding: 0;
+    min-height: calc(100vh - 90px);
+  }
+
+  /* Remove frame (causes visual imbalance) */
+  .hero::before {
+    display: none;
+  }
+
+  /* Image */
+  .hero-image-wrapper {
+    width: 170px;
+    height: 170px;
+    margin: 0 auto;
+  }
+
+  /* Content */
+  .hero-content {
+    max-width: 300px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .hero h1 {
+    font-size: 23px;
+  }
+
+  .hero p {
+    font-size: 14px;
+  }
+
+  /* Quote */
+  .hero-quote {
+    text-align: center;
+    border-left: none;
+    border-top: 3px solid var(--text-main);
+    margin: 16px 0;
+  }
+
+  /* Button */
+  .resume-btn {
+    margin: 0 auto;
+  }
+
+  /* Grids */
+  .bento-grid,
+  .projects-grid {
+    grid-template-columns: 1fr;
+  }
+
+  /* Contact */
+  .contact-form {
+    padding: 24px 16px;
+  }
+}
+

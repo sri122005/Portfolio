@@ -100,16 +100,37 @@ nav ul {
 nav a {
     text-decoration: none;
     color: var(--text-muted);
-    font-size: 13px; /* Smaller, more aesthetic */
+    font-size: 13px;
     font-weight: 500;
-    letter-spacing: 1.5px; /* Increased letter spacing */
+    letter-spacing: 1.5px;
     transition: 0.3s;
     text-transform: uppercase;
+    position: relative; /* For underline */
 }
 
-nav a:hover {
+nav a:hover, 
+nav a.active {
     color: var(--text-main);
-    letter-spacing: 2px; /* Subtle expansion effect */
+    letter-spacing: 2px;
+    text-shadow: 0 0 15px rgba(167, 139, 250, 0.6);
+}
+
+/* Desktop Underline Effect */
+nav a::after {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: var(--theme-accent);
+    transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 0 8px var(--theme-accent);
+}
+
+nav a.active::after,
+nav a:hover::after {
+    width: 100%;
 }
 
 /* CONTAINER */
@@ -129,7 +150,7 @@ h1, h2, h3 {
 
 
 .section-title {
-    font-size: 38px;
+    font-size: clamp(28px, 4vw, 38px);
     margin-bottom: 70px;
     margin-top: 20px;
     text-align: center;
@@ -149,7 +170,7 @@ h1, h2, h3 {
 
 /* HERO */
 .hero {
-    min-height: 80vh;
+    /* min-height: 80vh; */
     display: flex;
     flex-direction: row; 
     align-items: center;
@@ -255,8 +276,8 @@ h1, h2, h3 {
 }
 
 .hero h1 {
-    font-size: 32px;
-    font-weight: 500; /* Reduced from 700 */
+    font-size: clamp(2rem, 5vw, 2.5rem); /* Fluid scaling */
+    font-weight: 500;
     line-height: 1.2;
     margin-bottom: 15px;
     color: #ffffff;
@@ -550,7 +571,33 @@ textarea.form-input {
 }
 
 /* RESPONSIVE */
-/* RESPONSIVE */
+/* TABLET & SMALL LAPTOP (1024px and down) */
+@media (max-width: 1024px) {
+    .container {
+        padding: 120px 20px;
+    }
+
+    /* Bento Grid: 2 Columns */
+    .bento-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .bento-item.large {
+        grid-column: span 2;
+        grid-row: auto;
+    }
+    
+    .bento-item.medium {
+        grid-column: span 2;
+    }
+
+    /* Projects Grid: 2 Columns */
+    .projects-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* MOBILE & SMALL TABLET (768px) */
 @media (max-width: 768px) {
     .container {
         padding: 100px 20px;
@@ -565,47 +612,33 @@ textarea.form-input {
     }
 
     .hero-image-wrapper {
-        width: 200px; /* Smaller image */
-        height: 200px;
+        width: 250px;
+        height: 250px;
         margin-bottom: 20px;
     }
 
     .hero-content {
         max-width: 100%;
-        height: auto; /* Reset fixed height from desktop */
-        align-items: center; /* Center button and text */
+        height: auto; 
+        align-items: center;
     }
 
     .hero h1 {
-        font-size: 32px; /* Adjusted size */
+        font-size: clamp(1.8rem, 5vw, 2.2rem); 
     }
 
     .hero-quote {
-        margin: 20px auto; /* Center align quote */
+        margin: 20px auto;
         text-align: center;
-        width: 100%; /* Ensure full width availability */
+        width: 100%;
         display: flex;
         flex-direction: column;
         align-items: center;
-        border-left: 1px solid var(--border-card); /* Reset left border */
-        border-top: 3px solid var(--text-main); /* Move accent to top */
+        border-left: 1px solid var(--border-card);
+        border-top: 3px solid var(--text-main);
     }
 
-    /* Bento Grid columns */
-    .bento-grid {
-        grid-template-columns: 1fr; /* Stack items */
-    }
-
-    .bento-item.large,
-    .bento-item.medium {
-        grid-column: span 1;
-        grid-row: auto;
-    }
-
-    /* Projects Grid */
-    .projects-grid {
-        grid-template-columns: 1fr;
-    }
+    /* Grid layouts inherit 2-columns (until 600px) */
 
     nav {
         width: 95%; /* Use more screen width on mobile */
@@ -613,52 +646,138 @@ textarea.form-input {
         justify-content: space-between; /* Space out Logo and Icon */
     }
 
-    /* Scroll State: Hide Navbar Completely */
+    /* Scroll State: Visible Glass (Mobile) */
+    /* Scroll State: Hide Top Bar, Show Icon */
     nav.scrolled {
-        top: -150px; /* Slide up out of view */
+        top: 10px;
+        background: transparent !important;
+        box-shadow: none !important;
+        backdrop-filter: none !important;
+        border: none !important;
+        pointer-events: none; /* Allow clicks through invisible bar */
+    }
+
+    nav.scrolled .logo {
         opacity: 0;
-        pointer-events: none; /* Prevent clicks when hidden */
+        transform: translateY(-20px);
+        transition: 0.3s;
     }
 
-    .logo {
-        font-size: 20px;
-    }
-
-    /* Hide links initially on mobile */
+    /* Mobile Menu: Mini Floating Drawer */
     .nav-links {
         position: fixed;
         top: 0;
-        right: -100%; /* Slide out */
-        width: 70%;
-        height: 100vh;
-        background: rgba(5, 5, 5, 0.95);
+        right: -100%;
+        width: 50%; /* Even narrower */
+        max-width: 200px;
+        height: auto; /* Not full height */
+        min-height: 250px; /* Minimum visual weight */
+        padding: 60px 20px 40px 30px; /* Top padding clears toggle */
+        background: rgba(10, 10, 15, 0.98);
         backdrop-filter: blur(20px);
+        border-left: 1px solid rgba(255, 255, 255, 0.08);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        border-bottom-left-radius: 20px; /* Curved corner */
         display: flex;
         flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        gap: 40px;
-        transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        justify-content: flex-start; /* Align top */
+        align-items: flex-start;
+        gap: 15px; /* Tighter */
+        transition: all 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
         z-index: 999;
-        box-shadow: -10px 0 30px rgba(0,0,0,0.5);
+        box-shadow: -10px 10px 30px rgba(0,0,0,0.6);
+        pointer-events: auto;
     }
 
     .nav-links.active {
-        right: 0; /* Slide in */
+        right: 0;
+    }
+
+    .nav-links li {
+        width: 100%;
+        list-style: none;
     }
 
     .nav-links li a {
-        font-size: 18px; /* Smaller/cleaner */
+        font-size: 13px; /* Very small/aesthetic */
+        font-weight: 500;
+        color: #888;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        transition: 0.3s;
+        display: block;
+        padding: 6px 0;
+    }
+
+    /* Attractive Hover */
+    .nav-links li a:hover {
+        color: #fff;
+        padding-left: 8px; /* Slide effect */
+        text-shadow: 0 0 10px rgba(255,255,255,0.4);
+    }
+
+    /* Active Highlight (Scroll Spy) */
+    .nav-links li a.active {
+        color: #a78bfa;
         font-weight: 700;
-        color: var(--text-main);
+        letter-spacing: 2px;
+        padding-left: 12px;
+        border-left: 3px solid #a78bfa;
+        background: linear-gradient(90deg, rgba(167, 139, 250, 0.1), transparent);
     }
 
     .menu-toggle {
-        display: block; /* Visible on mobile */
-        font-size: 20px; /* Smaller icon */
+        display: block;
+        font-size: 22px;
         cursor: pointer;
-        z-index: 1000;
-        color: var(--text-main);
+        z-index: 1001;
+        color: #fff;
+        pointer-events: auto;
+        transition: 0.3s;
+    }
+
+    /* Toggle style when scrolled (Circle Button) */
+    nav.scrolled .menu-toggle {
+        background: rgba(0, 0, 0, 0.6);
+        padding: 12px;
+        border-radius: 50%;
+        backdrop-filter: blur(5px);
+        box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+    }
+}
+
+/* MOBILE PHONES (600px and down) */
+@media (max-width: 600px) {
+    /* Collapse grids to 1 column here */
+    .bento-grid, 
+    .projects-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .bento-item.large,
+    .bento-item.medium {
+        grid-column: span 1;
+    }
+    
+    .hero-image-wrapper {
+        width: 200px;
+        height: 200px;
+    }
+
+    /* Explicitly Center All Content */
+    .bento-item, 
+    .project-card {
+        text-align: center;
+        align-items: center; /* For flex items */
+        display: flex;
+        flex-direction: column; /* Ensure vertical stacking */
+    }
+
+    /* Center Flex Rows */
+    .tag-cloud, 
+    .project-tags,
+    .icon-cloud {
+        justify-content: center;
     }
 }
 
@@ -667,4 +786,133 @@ textarea.form-input {
     .menu-toggle {
         display: none;
     }
+}
+
+/* =========================
+   FINAL MOBILE FIX (<=400px)
+   Clean, centered, stable
+========================= */
+@media (max-width: 400px) {
+
+  body {
+    overflow-x: hidden;
+  }
+
+  /* Container */
+  .container {
+    max-width: 100%;
+    margin: 0 auto;
+    padding: 80px 15px 60px;
+  }
+
+  /* HERO */
+  .hero {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    gap: 20px;
+    margin: 0 auto;
+    padding: 20px 0;
+    min-height: auto;
+  }
+
+  /* Remove frame */
+  .hero::before {
+    display: none;
+  }
+
+  /* Image */
+  .hero-image-wrapper {
+    width: 160px;
+    height: 160px;
+    margin: 0 auto 20px;
+  }
+
+  /* Content */
+  .hero-content {
+    max-width: 100%;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .hero h1 {
+    font-size: 24px;
+    line-height: 1.3;
+  }
+
+  .hero p {
+    font-size: 14px;
+    margin-bottom: 20px;
+  }
+
+  /* Quote */
+  .hero-quote {
+    text-align: center;
+    border-left: none;
+    border-top: 3px solid var(--text-main);
+    margin: 20px 0;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  /* Button */
+  .resume-btn {
+    margin: 0 auto;
+  }
+
+  /* Grids */
+  .bento-grid,
+  .projects-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  /* Force CARD Centering */
+  .bento-item,
+  .project-card {
+      text-align: center !important;
+      align-items: center !important;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+  }
+
+  /* Flex Rows */
+  .project-tags,
+  .tag-cloud,
+  .icon-cloud {
+      justify-content: center !important;
+  }
+
+  /* Contact */
+  .contact-form {
+    padding: 20px 15px;
+    width: 100%;
+    margin: 0 auto;
+  }
+
+  /* CRITICAL FIX: Hide overflowing elements */
+  .glow-orb, .orb-1, .orb-2, .orb-3 {
+      display: none !important;
+  }
+
+  .contact-wrapper {
+      padding: 0;
+      overflow: hidden;
+  }
+  
+  /* Force page width constraints */
+  html, body {
+      width: 100%;
+      min-height: 100%;
+      overflow-x: hidden;
+      position: relative;
+  }
 }
